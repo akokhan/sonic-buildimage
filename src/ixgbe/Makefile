@@ -12,6 +12,11 @@ $(addprefix $(DEST)/, $(MAIN_TARGET)): $(DEST)/% :
 	# Patch
 	pushd ./ixgbe-$(IXGBE_DRIVER_VERSION)
 
+ifeq ($(CONFIGURED_PLATFORM), barefoot)
+	patch -p0 < ../ixgbe_bfn.patch
+	touch bfn-patch-applied
+endif
+
 	# Build the package
 	pushd src
 	export BUILD_KERNEL=$(KVERSION)
